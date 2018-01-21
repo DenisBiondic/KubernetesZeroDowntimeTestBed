@@ -1,0 +1,28 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: watchdog
+spec:
+  replicas: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: watchdog
+    spec:
+      containers:
+      - name: testbed-watchdog
+        image: coffeeapplied/testbed-watchdog:latest
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: watchdog
+spec:
+  selector:
+    app: watchdog
+  ports:
+  - protocol: TCP
+    port: 8090
+    targetPort: 8090

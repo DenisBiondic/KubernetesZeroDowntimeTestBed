@@ -1,0 +1,28 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fancy-service
+spec:
+  replicas: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: fancy-service
+    spec:
+      containers:
+      - name: testbed-fancy-service
+        image: coffeeapplied/testbed-fancy-service:latest
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fancy-service
+spec:
+  selector:
+    app: fancy-service
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
